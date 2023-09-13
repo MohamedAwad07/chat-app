@@ -29,3 +29,5 @@ class AppCreateUserFailState extends AppStates {}
 class AppGetUserDataSuccessState extends AppStates {}
 
 class AppGetUserDataFailState extends AppStates {}
+
+class AppChangeModeSuccessState extends AppStates {}

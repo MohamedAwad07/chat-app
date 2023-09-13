@@ -9,6 +9,6 @@ class ColorsManager {
   static const Color errorBorder = Colors.red;
   static const Color focusBorder = Colors.blue;
   static const Color disableBorder = Colors.grey;
-  static const Color errorMessage = Colors.grey;
-  static const Color successMessage = Colors.grey;
+  static const Color errorMessage = Colors.red;
+  static const Color successMessage = Colors.green;
 }

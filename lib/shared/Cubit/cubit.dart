@@ -2,11 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:chat_app/models/UserModel.dart';
 import 'package:chat_app/shared/Cubit/states.dart';
 import 'package:chat_app/shared/constants/color_manager.dart';
+import 'package:chat_app/shared/shared%20pref/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../modules/home.dart';
 import '../constants/constants.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -19,6 +21,7 @@ class AppCubit extends Cubit<AppStates> {
   var formKey = GlobalKey<FormState>();
   bool isPassword = true;
   bool isChecked = false;
+  bool isDark = true;
 
   // Register page variables
   var formKeyReg = GlobalKey<FormState>();
@@ -26,6 +29,22 @@ class AppCubit extends Cubit<AppStates> {
   bool isCheckedReg = false;
 
   // login page functions
+  void modeChange({ bool? fromShared}) {
+    if (fromShared != null) 
+    {
+      isDark = fromShared;
+      emit(AppChangeModeSuccessState());
+    } else
+    {
+      isDark = !isDark;
+      CacheHelper.saveData(key: 'isDark', value: isDark).then((value) => {
+      emit(AppChangeModeSuccessState()),
+      });
+    }
+
+
+  }
+
   void checkedChange(bool value) {
     isChecked = value;
     emit(AppCheckedChangeState());
@@ -101,7 +120,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  Future signIn() async {
+  Future signIn({required BuildContext context}) async {
     emit(LoadingState());
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
@@ -118,7 +137,8 @@ class AppCubit extends Cubit<AppStates> {
         fontSize: 16.0,
       );
       print("Success");
-      getUserData();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Home()));
       emit(AppSignInSuccessState());
     }).catchError((error) {
       Fluttertoast.showToast(
@@ -131,8 +151,9 @@ class AppCubit extends Cubit<AppStates> {
         fontSize: 16.0,
       );
       print('error is :  ${error.toString()}');
+      emit(AppSignInFailState());
     });
-    emit(AppSignInFailState());
+
     //  Navigator.of(context).pushNamed('A');
   }
 
@@ -142,13 +163,15 @@ class AppCubit extends Cubit<AppStates> {
     required String phone,
   }) {
     UserModel model = UserModel(name: name, email: email, phone: phone);
+    CacheHelper.saveData(key: 'user count', value: countUser);
     print('Counter before use : ${randomNumber.toString()}');
     FirebaseFirestore.instance
         .collection('users')
-        .doc("1")
+        .doc(CacheHelper.getData(key: 'user count').toString())
         .set(model.toMap())
         .then((value) => {
-              randomNumber++,
+             countUser++,
+             CacheHelper.saveData(key: 'user count', value: countUser),
               emit(AppCreateUserSuccessState()),
             })
         .catchError((error) {
@@ -157,18 +180,18 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void getUserData() {
-    DocumentSnapshot<Map<String , dynamic>> test;
+    DocumentSnapshot<Map<String, dynamic>> test;
     UserModel userData;
     FirebaseFirestore.instance
         .collection('users')
         .doc("1")
         .get()
         .then((value) => {
-      print(value.data()),
-      emit(AppGetUserDataSuccessState()),
-    })
+              print(value.data()),
+              emit(AppGetUserDataSuccessState()),
+            })
         .catchError((error) {
-          print('error is  : ${error.toString()}');
+      print('error is  : ${error.toString()}');
       emit(AppGetUserDataFailState());
     });
   }

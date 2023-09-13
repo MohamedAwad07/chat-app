@@ -34,11 +34,7 @@ Widget register() {
                       ),
                       child: Text(
                         'Create Account',
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          fontFamily: 'LilitaOne',
-                          color: ColorsManager.brown,
-                        ),
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ),
                     const SizedBox(
@@ -46,6 +42,7 @@ Widget register() {
                     ),
                     //username
                     defaultTextFormField(
+                      context: context,
                       label: 'Username',
                       controller: userControllerReg,
                       validate: (value) {
@@ -64,6 +61,7 @@ Widget register() {
                     ),
                     // email
                     defaultTextFormField(
+                      context: context,
                       label: 'Email',
                       controller: emailControllerReg,
                       validate: (value) {
@@ -82,6 +80,7 @@ Widget register() {
                     ),
                     //password
                     defaultTextFormField(
+                      context: context,
                       label: 'Password',
                       controller: passControllerReg,
                       validate: (value) {
@@ -106,13 +105,14 @@ Widget register() {
                       height: 15.0,
                     ),
                     defaultTextFormField(
+                      context: context,
                       label: 'Phone',
                       controller: phoneControllerReg,
                       validate: (value) {
                         if (value?.isEmpty == true) {
                           return 'Phone must not be empty';
-                        } else if ((value?.length ?? 0) < 11) {
-                          return 'Very short Phone';
+                        } else if ((value?.length ?? 0) != 11) {
+                          return 'invalid Numbers count';
                         }
                         return null;
                       },
@@ -160,12 +160,9 @@ Widget register() {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                         Text(
                           'already have account?...',
-                          style: TextStyle(
-                            color: ColorsManager.brown,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         TextButton(
                             onPressed: () {

@@ -5,59 +5,52 @@ class ThemeManager {
   ThemeManager._();
 
   static getAppLightTheme() => ThemeData.light(useMaterial3: true).copyWith(
-      inputDecorationTheme: const InputDecorationTheme(
-        hintStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+      inputDecorationTheme:  InputDecorationTheme(
+        enabledBorder: OutlineInputBorder(
+          borderRadius:  BorderRadius.circular(15.0),
+          borderSide: BorderSide(color: ColorsManager.brown, width: 2),
+        ),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5))),
-              backgroundColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Colors.grey[400];
-                }
-                return Colors.red;
-              }))),
       textTheme: TextTheme(
-        titleMedium: TextStyle(
-            fontSize: 18,
-            color: Colors.pinkAccent,
-            fontWeight: FontWeight.bold),
         headlineMedium: TextStyle(
-            fontSize: 18,
-            color: Colors.pinkAccent,
-            fontWeight: FontWeight.bold),
+          fontFamily: 'LilitaOne',
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          color: ColorsManager.brown,
+        ),
+        titleMedium: TextStyle(
+          fontSize: 15.0,
+          color: ColorsManager.brown,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.indigo,
-        titleSpacing: 10,
       ),
       checkboxTheme: CheckboxThemeData());
 
   static getAppDarkTheme() => ThemeData.dark(useMaterial3: true).copyWith(
-      appBarTheme: AppBarTheme(
-          toolbarHeight: 75,
-          titleSpacing: 10,
-          backgroundColor: ColorsManager.successMessage),
-      scaffoldBackgroundColor: ColorsManager.successMessage,
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(200, 50),
-          maximumSize: const Size(300, 60),
+      scaffoldBackgroundColor: Color(0xFF000C1E),
+      appBarTheme:
+          AppBarTheme(elevation: 5.0, backgroundColor: Color(0xFF01132F)),
+      inputDecorationTheme:  InputDecorationTheme(
+        enabledBorder: OutlineInputBorder(
+          borderRadius:  BorderRadius.circular(15.0),
+          borderSide: BorderSide(color: Colors.white, width: 2),
         ),
       ),
-      dividerTheme: const DividerThemeData(color: Colors.red, thickness: 5),
-      textTheme: const TextTheme(
-        bodyLarge: TextStyle(
-          color: Colors.white,
-          fontSize: 50,
-          // fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
-          height: 1.38,
+      textTheme: TextTheme(
+        headlineMedium: TextStyle(
+          fontFamily: 'LilitaOne',
+          fontSize: 30.0,
+          color: ColorsManager.white,
         ),
         titleMedium: TextStyle(
-            fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+          fontSize: 15.0,
+          color: ColorsManager.white,
+          fontWeight: FontWeight.w500,
+        ),
       ),
-      checkboxTheme: CheckboxThemeData(
-          fillColor: MaterialStateProperty.all(Colors.amber)));
+      checkboxTheme:
+          CheckboxThemeData(fillColor: MaterialStateProperty.all(Colors.grey)));
 }

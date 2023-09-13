@@ -8,7 +8,15 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Suiiiiii"),
+        actions: [
+          IconButton(
+              onPressed: () {
+              },
+              icon: Icon(
+                Icons.brightness_4_outlined,
+              )
+          ),
+        ],
       ),
     );
   }

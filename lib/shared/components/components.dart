@@ -52,18 +52,19 @@ Widget defaultTextFormField({
   TextInputType? keyboard,
   bool isObscure = false,
   AutovalidateMode? autoValidateMode,
-
+  required BuildContext context ,
   void Function()? obscure,
 }) {
   var normalBorder =  OutlineInputBorder(
       borderRadius:  BorderRadius.circular(15.0),
-      borderSide: const BorderSide(  color: ColorsManager.brown, width: 2));
+      borderSide: const BorderSide(width: 2));
   return  Padding(
   padding: const EdgeInsetsDirectional.only(
     start: 25.0,
     end: 25.0,
   ),
   child: TextFormField(
+    style:Theme.of(context).textTheme.titleMedium,
     autovalidateMode:autoValidateMode ,
     controller: controller,
     validator: validate,
@@ -71,7 +72,7 @@ Widget defaultTextFormField({
     keyboardType: keyboard,
     decoration: InputDecoration(
       enabled: true,
-      enabledBorder: normalBorder,
+      enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
       errorBorder: normalBorder.copyWith(
         borderSide: const BorderSide(  color: ColorsManager.errorBorder, width: 3),
       ),
